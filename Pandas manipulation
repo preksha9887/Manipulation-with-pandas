@@ -1,0 +1,61 @@
+import pandas as pd
+# Load the CSV file into a DataFrame
+df = pd.read_excel('file_example_XLSX_1000.xlsx')
+
+# Display the first few rows to check the data
+print(df.head())
+# Display basic information about the DataFrame
+print(df.info())
+
+# Display summary statistics of the DataFrame
+print(df.describe(include='all'))  # include='all' to get stats for non-numeric columns as well
+# Filter employee from United States
+us_employee = df[df['Country'] == 'United States']
+print(us_employee)
+# Filter students whose age is 25
+age_25_employee = df[df['Age'] == 25]
+print(age_25_employee)
+# Filter female employee
+female_employee = df[df['Gender'] == 'Female']
+print(female_employee)
+# Filter students whose from France and are mal
+france_male_employee = df[(df['Country'] == 'France') & (df['Gender'] == 'Male')]
+print(france_male_employee)
+# Check for missing values in each column
+print(df.isna().sum())
+# Drop rows where any column has missing values
+df_dropped = df.dropna()
+
+# Drop rows where 'age' column has missing values
+df_dropped_age = df.dropna(subset=['Age'])
+print(df_dropped_age)
+# Fill missing values in 'age' column with the mean mark
+df['Age'].fillna(df['Age'].mean(), inplace=True)
+
+# Alternatively, fill missing values in 'age' with a specific value, e.g., 0
+# df['age'].fillna(0, inplace=True)
+
+# Check the DataFrame after filling missing values
+print(df.head())
+# Fill missing values in 'gender' column with a placeholder value, e.g., 'Unknown'
+df['Gender'].fillna('Unknown', inplace=True)
+# Summary statistics for numerical columns
+print(df[['Age']].describe())
+# Mean age
+mean_age = df['Age'].mean()
+print(f"Mean Age: {mean_age}")
+
+# Median Age
+median_age= df['Age'].median()
+print(f"Median Age: {median_age}")
+
+# Standard deviation of 'age'
+std_age = df['Age'].std()
+print(f"Standard Deviation of Age: {std_age}")
+# Frequency of unique values in 'gender'
+gender_counts = df['Gender'].value_counts()
+print(gender_counts)
+
+# Proportion of unique values in 'gender'
+gender_proportions = df['Gender'].value_counts(normalize=True)
+print(gender_proportions)
